@@ -1,0 +1,29 @@
+{
+  "nav": {
+    "main": "Main Page",
+    "cafes": "Cafes and Restaurants",
+    "about": "About Us",
+    "partners": "For Partners"
+  },
+  "form": {
+    "phone": "Phone number",
+    "phone_placeholder": "+7XXXXXXXXXX",
+    "amount": "Amount",
+    "amount_placeholder": "0.00",
+    "deposit": "Deposit"
+  },
+  "footer": {
+    "privacy": "Privacy Policy",
+    "offer": "Public Offer",
+    "address": "Republic ofKazakhstan, Almaty, Kasteev street 91, +77788002044"
+  },
+  "modal": {
+    "language_title": "Choose language",
+    "city_title": "Choose city"
+  },
+  "cities": {
+    "almaty": "Almaty",
+    "astana": "Astana"
+  }
+}
+

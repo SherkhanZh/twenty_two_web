@@ -1,0 +1,295 @@
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial,
+    "Apple Color Emoji", "Segoe UI Emoji";
+  color: #1d1d1f;
+  background: linear-gradient(
+      to bottom left,
+      #faf6ed 20%,
+      #fff9d6 35%,
+      #faf6ed 70%
+    );
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 16px;
+  padding-right: 16px;
+}
+
+.site-header {
+  padding: 16px 0;
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.main-nav {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.nav-logo {
+  font-weight: 600;
+  color: inherit;
+  text-decoration: none;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-links a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.chip-button {
+  height: 36px;
+  border-radius: 18px;
+  padding: 0 12px;
+  border: 1px solid rgba(0,0,0,0.15);
+  background: #ffffff;
+  cursor: pointer;
+}
+
+.select-group select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  background: #ffffff;
+  border-radius: 8px;
+  padding: 8px 12px;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.site-main {
+  flex: 1 1 auto;
+  display: flex;
+  align-items: center;
+}
+.mascot {
+  display: block;
+  margin: 0 auto 16px auto;
+  max-width: 200px;
+  width: 50%;
+  height: auto;
+}
+
+
+.deposit-form {
+  width: 100%;
+  display: grid;
+  grid-template-columns: minmax(220px, 320px) 200px 140px;
+  gap: 12px;
+  align-items: end;
+  justify-content: center;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-field label {
+  font-size: 14px;
+}
+
+.form-field input {
+  height: 44px;
+  border-radius: 8px;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  padding: 0 12px;
+  background: #ffffff;
+}
+
+.btn {
+  height: 44px;
+  border: none;
+  border-radius: 12px;
+  padding: 0 16px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn-deposit {
+  background: #ec5d12;
+  color: #ffffff;
+}
+
+.site-footer {
+  padding: 24px 0;
+}
+
+.footer-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  align-items: center;
+  gap: 16px;
+}
+
+.footer-left {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.footer-left a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.footer-center {
+  display: flex;
+  justify-content: center;
+}
+
+.footer-right {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 12px;
+}
+
+.store-badge.appstore,
+.store-badge.playstore {
+  height: 40px;
+  width: 140px;
+  object-fit: contain;
+}
+
+/* Modal styles */
+.modal {
+  position: fixed;
+  inset: 0;
+  display: none;
+}
+
+.modal.open {
+  display: block;
+}
+
+.modal-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);
+  opacity: 0;
+  animation: overlayIn 150ms ease forwards;
+}
+
+.modal-card {
+  position: absolute;
+  left: 50%;
+  top: 20%;
+  transform: translateX(-50%) translateY(-8px);
+  width: min(520px, calc(100% - 32px));
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+  overflow: hidden;
+  opacity: 0;
+  animation: cardIn 200ms ease forwards;
+}
+/* (removed) pdf modal styles */
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-bottom: 1px solid rgba(0,0,0,0.08);
+}
+
+.modal-body {
+  padding: 16px 20px 20px;
+}
+
+.modal-close {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  border: 1px solid rgba(0,0,0,0.12);
+  background: #fff;
+  cursor: pointer;
+}
+
+.option-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.option {
+  height: 44px;
+  border-radius: 10px;
+  background: #f6f6f8;
+  border: 1px solid rgba(0,0,0,0.06);
+  cursor: pointer;
+}
+
+@keyframes overlayIn {
+  to { opacity: 1; }
+}
+
+@keyframes cardIn {
+  to { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+
+@media (max-width: 720px) {
+  .deposit-form {
+    grid-template-columns: 1fr;
+  }
+  .footer-content {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+  .footer-right {
+    justify-content: center;
+  }
+}
+
+

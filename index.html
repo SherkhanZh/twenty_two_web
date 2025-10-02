@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title data-i18n="nav.main"></title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container header-content">
+        <nav class="main-nav">
+          <a href="#" class="nav-logo" aria-label="Home">
+            <img src="assets/logo.png" alt="Main page" style="height:40px; width:auto;">
+          </a>
+          <ul class="nav-links">
+            <li><a href="#" data-i18n="nav.cafes">Cafes and Restaurants</a></li>
+            <li><a href="#" data-i18n="nav.about">About Us</a></li>
+            <li><a href="#" data-i18n="nav.partners">For Partners</a></li>
+          </ul>
+        </nav>
+        <div class="header-actions">
+          <button type="button" class="chip-button" id="open-language" aria-haspopup="dialog" aria-controls="language-modal">Қазақша ▾</button>
+          <button type="button" class="chip-button" id="open-city" aria-haspopup="dialog" aria-controls="city-modal">Almaty ▾</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="site-main">
+      <div class="container">
+        <img src="assets/mascot.png" alt="Mascot" class="mascot" id="mascot" />
+        <form class="deposit-form" action="#" method="post" novalidate>
+          <div class="form-field">
+            <label for="phone" data-i18n="form.phone">Phone number</label>
+            <input
+              id="phone"
+              name="phone"
+              type="tel"
+              inputmode="numeric"
+              autocomplete="tel"
+              value="+7"
+              minlength="12"
+              maxlength="12"
+              pattern="^\\+7\\d{10}$"
+              placeholder="+7XXXXXXXXXX"
+              data-i18n-placeholder="form.phone_placeholder"
+              required
+            />
+          </div>
+          <div class="form-field">
+            <label for="amount" data-i18n="form.amount">Amount</label>
+            <input
+              id="amount"
+              name="amount"
+              type="number"
+              inputmode="decimal"
+              min="0"
+              step="0.01"
+              placeholder="0.00"
+              data-i18n-placeholder="form.amount_placeholder"
+              required
+            />
+          </div>
+          <button type="submit" class="btn btn-deposit" data-i18n="form.deposit">Deposit</button>
+        </form>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-content">
+        <div class="footer-left">
+          <a href="assets/Policy.pdf" target="_blank" rel="noopener" data-i18n="footer.privacy">Privacy Policy</a>
+          <a href="assets/User.pdf" target="_blank" rel="noopener" data-i18n="footer.offer">Public Offer</a>
+        </div>
+        <div class="footer-center">
+          <div class="address" data-i18n="footer.address">Republic of Kazakhstan, Almaty, Kasteev street 91, +77788002044</div>
+        </div>
+        <div class="footer-right">
+          <a href="https://www.apple.com/app-store/" target="_blank" rel="noopener noreferrer" aria-label="Download on the App Store">
+            <img
+              src="assets/appstore.png"
+              alt="Download on the App Store"
+              class="store-badge appstore"
+            />
+          </a>
+          <a href="https://play.google.com/store" target="_blank" rel="noopener noreferrer" aria-label="Get it on Google Play">
+            <img
+              src="assets/playmarket.png"
+              alt="Get it on Google Play"
+              class="store-badge playstore"
+            />
+          </a>
+          <img
+            src="assets/visa.jpg"
+            alt="Visa"
+            class="store-badge visa"
+            width="80px"
+          />
+        </div>
+      </div>
+    </footer>
+
+    <!-- Language Modal -->
+    <div class="modal" id="language-modal" role="dialog" aria-modal="true" aria-labelledby="language-title" aria-hidden="true">
+      <div class="modal-overlay" data-close="language-modal"></div>
+      <div class="modal-card" role="document">
+        <div class="modal-header">
+          <h2 id="language-title" data-i18n="modal.language_title">Choose language</h2>
+          <button class="modal-close" type="button" aria-label="Close" data-close="language-modal">×</button>
+        </div>
+        <div class="modal-body">
+          <div class="option-grid" data-group="language">
+            <button type="button" class="option" data-value="kk" data-label="Қазақша">Қазақша</button>
+            <button type="button" class="option" data-value="ru" data-label="Русский">Русский</button>
+            <button type="button" class="option" data-value="en" data-label="English">English</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- City Modal -->
+    <div class="modal" id="city-modal" role="dialog" aria-modal="true" aria-labelledby="city-title" aria-hidden="true">
+      <div class="modal-overlay" data-close="city-modal"></div>
+      <div class="modal-card" role="document">
+        <div class="modal-header">
+          <h2 id="city-title" data-i18n="modal.city_title">Choose city</h2>
+          <button class="modal-close" type="button" aria-label="Close" data-close="city-modal">×</button>
+        </div>
+        <div class="modal-body">
+          <div class="option-grid" data-group="city">
+            <button type="button" class="option" data-value="almaty" data-i18n="cities.almaty">Almaty</button>
+            <button type="button" class="option" data-value="astana" data-i18n="cities.astana">Astana</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      (function () {
+        var phoneInput = document.getElementById('phone');
+        if (!phoneInput) return;
+
+        var PREFIX = '+7';
+
+        function ensurePrefix() {
+          if (!phoneInput.value || !phoneInput.value.startsWith(PREFIX)) {
+            var digits = phoneInput.value.replace(/\D/g, '');
+            // Remove leading 7 if user typed it without plus
+            if (digits.startsWith('7')) digits = digits.slice(1);
+            phoneInput.value = PREFIX + digits.slice(0, 10);
+          }
+        }
+
+        function filterDigitsAfterPrefix() {
+          var rest = phoneInput.value.replace(/^\+7/, '').replace(/\D/g, '');
+          phoneInput.value = PREFIX + rest.slice(0, 10);
+        }
+
+        phoneInput.addEventListener('beforeinput', function (e) {
+          // Prevent deleting the prefix
+          var selStart = phoneInput.selectionStart || 0;
+          if (selStart <= PREFIX.length && (e.inputType === 'deleteContentBackward' || e.inputType === 'deleteContentForward')) {
+            e.preventDefault();
+          }
+        });
+
+        phoneInput.addEventListener('input', function () {
+          ensurePrefix();
+          filterDigitsAfterPrefix();
+        });
+
+        // Initialize on load
+        ensurePrefix();
+        filterDigitsAfterPrefix();
+      })();
+    </script>
+
+    <script>
+      (function () {
+        function openModal(id) {
+          var modal = document.getElementById(id);
+          if (!modal) return;
+          modal.setAttribute('aria-hidden', 'false');
+          modal.classList.add('open');
+          document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal(id) {
+          var modal = document.getElementById(id);
+          if (!modal) return;
+          modal.setAttribute('aria-hidden', 'true');
+          modal.classList.remove('open');
+          document.body.style.overflow = '';
+        }
+
+        // Open buttons
+        var openLangBtn = document.getElementById('open-language');
+        var openCityBtn = document.getElementById('open-city');
+        if (openLangBtn) openLangBtn.addEventListener('click', function () { openModal('language-modal'); });
+        if (openCityBtn) openCityBtn.addEventListener('click', function () { openModal('city-modal'); });
+
+        // Close via overlay or close button
+        document.addEventListener('click', function (e) {
+          var target = e.target;
+          if (!(target instanceof Element)) return;
+          // (removed) embedded PDF handler
+          var closeId = target.getAttribute('data-close');
+          if (closeId) {
+            closeModal(closeId);
+          }
+        });
+
+        // Escape key closes topmost open modal
+        document.addEventListener('keydown', function (e) {
+          if (e.key === 'Escape') {
+            var openModalEl = document.querySelector('.modal.open');
+            if (openModalEl && openModalEl.id) closeModal(openModalEl.id);
+          }
+        });
+
+        // Selection handling
+        function handleSelection(group, value) {
+          if (group === 'language') {
+            var btn = document.getElementById('open-language');
+            var label = '';
+            if (value === 'kk') label = 'Қазақша';
+            if (value === 'ru') label = 'Русский';
+            if (value === 'en') label = 'English';
+            if (btn) btn.textContent = label + ' ▾';
+            closeModal('language-modal');
+            window.applyLanguage && window.applyLanguage(value);
+          }
+          if (group === 'city') {
+            if (window.applyCity) window.applyCity(value);
+            closeModal('city-modal');
+          }
+        }
+
+        document.addEventListener('click', function (e) {
+          var target = e.target;
+          if (!(target instanceof Element)) return;
+          if (target.classList.contains('option')) {
+            var parent = target.closest('.option-grid');
+            if (!parent) return;
+            var group = parent.getAttribute('data-group') || '';
+            var value = target.getAttribute('data-value') || target.textContent.trim();
+            handleSelection(group, value);
+          }
+        });
+      })();
+    </script>
+
+    
+
+    <script>
+      // Inline i18n maps as local fallback (works over file://)
+      window.INLINE_I18N = {
+        en: {
+          nav: { main: "Main Page", cafes: "Cafes and Restaurants", about: "About Us", partners: "For Partners" },
+          form: { phone: "Phone number", phone_placeholder: "+7XXXXXXXXXX", amount: "Amount", amount_placeholder: "0.00", deposit: "Deposit" },
+          footer: { privacy: "Privacy Policy", offer: "Public Offer", address: "Republic of Kazakhstan, Almaty, Kasteev street 91, +77788002044" },
+          modal: { language_title: "Choose language", city_title: "Choose city" },
+          cities: { almaty: "Almaty", astana: "Astana" }
+        },
+        ru: {
+          nav: { main: "Главная", cafes: "Кафе и рестораны", about: "О нас", partners: "Партнёрам" },
+          form: { phone: "Номер телефона", phone_placeholder: "+7XXXXXXXXXX", amount: "Сумма", amount_placeholder: "0.00", deposit: "Пополнить" },
+          footer: { privacy: "Политика конфиденциальности", offer: "Публичная оферта", address: "Республика Казахстан, город Алматы, улица Кастеева 90, +77788002044" },
+          modal: { language_title: "Выберите язык", city_title: "Выберите город" },
+          cities: { almaty: "Алматы", astana: "Астана" }
+        },
+        kk: {
+          nav: { main: "Басты", cafes: "Кафелер мен мейрамханалар", about: "Біз туралы", partners: "Серіктестерге" },
+          form: { phone: "Телефон нөмірі", phone_placeholder: "+7XXXXXXXXXX", amount: "Сома", amount_placeholder: "0.00", deposit: "Толықтыру" },
+          footer: { privacy: "Құпиялылық саясаты", offer: "Қоғамдық оферта", address: "Қазақстан Республикасы, Алматы қаласы, Қастеев көшесі 91, +77788002044" },
+          modal: { language_title: "Тілді таңдаңыз", city_title: "Қаланы таңдаңыз" },
+          cities: { almaty: "Алматы", astana: "Астана" }
+        }
+      };
+    </script>
+
+    <script>
+      // Simple i18n loader with persistence and city localization
+      (function () {
+        var stored = null;
+        try { stored = localStorage.getItem('lang'); } catch (e) {}
+        var currentLang = stored || 'kk';
+        var storedCity = null;
+        try { storedCity = localStorage.getItem('city'); } catch (e) {}
+        var currentCity = storedCity || 'almaty';
+
+        function setText(el, text) {
+          if (el) el.textContent = text;
+        }
+
+        function setPlaceholder(el, text) {
+          if (el) el.setAttribute('placeholder', text);
+        }
+
+        function t(map, key) {
+          return key && key.split('.').reduce(function (acc, part) {
+            return acc && acc[part];
+          }, map);
+        }
+
+        function applyTranslations(map) {
+          window.__lastTranslations = map;
+          document.querySelectorAll('[data-i18n]').forEach(function (el) {
+            var key = el.getAttribute('data-i18n');
+            var value = t(map, key);
+            if (typeof value === 'string') setText(el, value);
+          });
+          document.querySelectorAll('[data-i18n-placeholder]').forEach(function (el) {
+            var key = el.getAttribute('data-i18n-placeholder');
+            var value = t(map, key);
+            if (typeof value === 'string') setPlaceholder(el, value);
+          });
+          // Update city button label
+          var cityBtn = document.getElementById('open-city');
+          if (cityBtn) {
+            var cityLabel = t(map, 'cities.' + currentCity) || currentCity;
+            cityBtn.textContent = cityLabel + ' ▾';
+          }
+        }
+
+        function loadLang(lang) {
+          // Prefer inline to avoid file protocol fetch issues
+          if (window.INLINE_I18N && window.INLINE_I18N[lang]) {
+            return Promise.resolve(window.INLINE_I18N[lang]);
+          }
+          return fetch('assets/i18n/' + lang + '.json').then(function (r) { return r.json(); });
+        }
+
+        function applyLanguage(lang) {
+          currentLang = lang;
+          try { localStorage.setItem('lang', lang); } catch (e) {}
+          loadLang(lang).then(function (map) {
+            applyTranslations(map);
+            // sync header button label
+            var btn = document.getElementById('open-language');
+            if (btn) {
+              var label = lang === 'kk' ? 'Қазақша' : (lang === 'ru' ? 'Русский' : 'English');
+              btn.textContent = label + ' ▾';
+            }
+          }).catch(function () {
+            // fallback to English
+            if (lang !== 'en') loadLang('en').then(function (m) {
+              applyTranslations(m);
+            });
+          });
+        }
+
+        function applyCity(cityKey) {
+          currentCity = cityKey;
+          try { localStorage.setItem('city', cityKey); } catch (e) {}
+          loadLang(currentLang).then(function (map) {
+            var cityBtn = document.getElementById('open-city');
+            if (cityBtn) {
+              var cityLabel = t(map, 'cities.' + currentCity) || cityKey;
+              cityBtn.textContent = cityLabel + ' ▾';
+            }
+          });
+        }
+
+        window.applyLanguage = applyLanguage;
+        window.applyCity = applyCity;
+        // Initialize with stored or defaults
+        applyLanguage(currentLang);
+        applyCity(currentCity);
+      })();
+    </script>
+
+    <script>
+      // Mascot frame animation
+      (function () {
+        var frames = [
+          'assets/mascot.png',
+          'assets/mascot2.png',
+          'assets/mascot3.png',
+          'assets/mascot4.png',
+          'assets/mascot5.png',
+          'assets/mascot6.png',
+          'assets/mascot7.png',
+          'assets/mascot8.png'
+        ];
+        // Preload images
+        frames.forEach(function (src) {
+          var img = new Image();
+          img.src = src;
+        });
+
+        var idx = 0;
+        var el = document.getElementById('mascot');
+        if (!el) return;
+
+        function nextFrame() {
+          idx = (idx + 1) % frames.length;
+          el.src = frames[idx];
+        }
+
+        var interval = setInterval(nextFrame, 160);
+
+        // Pause on hover for accessibility
+        el.addEventListener('mouseenter', function () { clearInterval(interval); });
+        el.addEventListener('mouseleave', function () { interval = setInterval(nextFrame, 160); });
+      })();
+    </script>
+  </body>
+  </html>
+
+
