@@ -20,8 +20,14 @@
           </ul>
         </nav>
         <div class="header-actions">
-          <button type="button" class="chip-button" id="open-language" aria-haspopup="dialog" aria-controls="language-modal">Қазақша ▾</button>
+          <div class="lang-toggle" id="lang-toggle" role="group" aria-label="Language">
+            <button type="button" class="lang-option" data-lang="kk">Қаз</button>
+            <button type="button" class="lang-option" data-lang="ru">Рус</button>
+            <button type="button" class="lang-option" data-lang="en">Eng</button>
+          </div>
+          <!-- City choice hidden for now
           <button type="button" class="chip-button" id="open-city" aria-haspopup="dialog" aria-controls="city-modal">Almaty ▾</button>
+          -->
         </div>
       </div>
     </header>
@@ -29,40 +35,6 @@
     <main class="site-main">
       <div class="container">
         <img src="assets/mascot.png" alt="Mascot" class="mascot" id="mascot" />
-        <form class="deposit-form" action="#" method="post" novalidate>
-          <div class="form-field">
-            <label for="phone" data-i18n="form.phone">Phone number</label>
-            <input
-              id="phone"
-              name="phone"
-              type="tel"
-              inputmode="numeric"
-              autocomplete="tel"
-              value="+7"
-              minlength="12"
-              maxlength="12"
-              pattern="^\\+7\\d{10}$"
-              placeholder="+7XXXXXXXXXX"
-              data-i18n-placeholder="form.phone_placeholder"
-              required
-            />
-          </div>
-          <div class="form-field">
-            <label for="amount" data-i18n="form.amount">Amount</label>
-            <input
-              id="amount"
-              name="amount"
-              type="number"
-              inputmode="decimal"
-              min="0"
-              step="0.01"
-              placeholder="0.00"
-              data-i18n-placeholder="form.amount_placeholder"
-              required
-            />
-          </div>
-          <button type="submit" class="btn btn-deposit" data-i18n="form.deposit">Deposit</button>
-        </form>
       </div>
     </main>
 
@@ -70,7 +42,7 @@
       <div class="container footer-content">
         <div class="footer-left">
           <a href="assets/Policy.pdf" target="_blank" rel="noopener" data-i18n="footer.privacy">Privacy Policy</a>
-          <a href="assets/User.pdf" target="_blank" rel="noopener" data-i18n="footer.offer">Public Offer</a>
+          <a href="assets/User.pdf" target="_blank" rel="noopener" data-i18n="footer.offer">Terms of Use</a>
         </div>
         <div class="footer-center">
           <div class="address" data-i18n="footer.address">Republic of Kazakhstan, Almaty, Kasteev street 91, +77788002044</div>
@@ -100,25 +72,7 @@
       </div>
     </footer>
 
-    <!-- Language Modal -->
-    <div class="modal" id="language-modal" role="dialog" aria-modal="true" aria-labelledby="language-title" aria-hidden="true">
-      <div class="modal-overlay" data-close="language-modal"></div>
-      <div class="modal-card" role="document">
-        <div class="modal-header">
-          <h2 id="language-title" data-i18n="modal.language_title">Choose language</h2>
-          <button class="modal-close" type="button" aria-label="Close" data-close="language-modal">×</button>
-        </div>
-        <div class="modal-body">
-          <div class="option-grid" data-group="language">
-            <button type="button" class="option" data-value="kk" data-label="Қазақша">Қазақша</button>
-            <button type="button" class="option" data-value="ru" data-label="Русский">Русский</button>
-            <button type="button" class="option" data-value="en" data-label="English">English</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- City Modal -->
+    <!-- City Modal (hidden for now, together with the header city button)
     <div class="modal" id="city-modal" role="dialog" aria-modal="true" aria-labelledby="city-title" aria-hidden="true">
       <div class="modal-overlay" data-close="city-modal"></div>
       <div class="modal-card" role="document">
@@ -134,46 +88,7 @@
         </div>
       </div>
     </div>
-
-    <script>
-      (function () {
-        var phoneInput = document.getElementById('phone');
-        if (!phoneInput) return;
-
-        var PREFIX = '+7';
-
-        function ensurePrefix() {
-          if (!phoneInput.value || !phoneInput.value.startsWith(PREFIX)) {
-            var digits = phoneInput.value.replace(/\D/g, '');
-            // Remove leading 7 if user typed it without plus
-            if (digits.startsWith('7')) digits = digits.slice(1);
-            phoneInput.value = PREFIX + digits.slice(0, 10);
-          }
-        }
-
-        function filterDigitsAfterPrefix() {
-          var rest = phoneInput.value.replace(/^\+7/, '').replace(/\D/g, '');
-          phoneInput.value = PREFIX + rest.slice(0, 10);
-        }
-
-        phoneInput.addEventListener('beforeinput', function (e) {
-          // Prevent deleting the prefix
-          var selStart = phoneInput.selectionStart || 0;
-          if (selStart <= PREFIX.length && (e.inputType === 'deleteContentBackward' || e.inputType === 'deleteContentForward')) {
-            e.preventDefault();
-          }
-        });
-
-        phoneInput.addEventListener('input', function () {
-          ensurePrefix();
-          filterDigitsAfterPrefix();
-        });
-
-        // Initialize on load
-        ensurePrefix();
-        filterDigitsAfterPrefix();
-      })();
-    </script>
+    -->
 
     <script>
       (function () {
@@ -193,10 +108,19 @@
           document.body.style.overflow = '';
         }
 
-        // Open buttons
-        var openLangBtn = document.getElementById('open-language');
+        // Language toggle
+        var langToggle = document.getElementById('lang-toggle');
+        if (langToggle) {
+          langToggle.addEventListener('click', function (e) {
+            var t = e.target;
+            if (t instanceof Element && t.hasAttribute('data-lang')) {
+              window.applyLanguage && window.applyLanguage(t.getAttribute('data-lang'));
+            }
+          });
+        }
+
+        // City button hidden for now
         var openCityBtn = document.getElementById('open-city');
-        if (openLangBtn) openLangBtn.addEventListener('click', function () { openModal('language-modal'); });
         if (openCityBtn) openCityBtn.addEventListener('click', function () { openModal('city-modal'); });
 
         // Close via overlay or close button
@@ -220,16 +144,6 @@
 
         // Selection handling
         function handleSelection(group, value) {
-          if (group === 'language') {
-            var btn = document.getElementById('open-language');
-            var label = '';
-            if (value === 'kk') label = 'Қазақша';
-            if (value === 'ru') label = 'Русский';
-            if (value === 'en') label = 'English';
-            if (btn) btn.textContent = label + ' ▾';
-            closeModal('language-modal');
-            window.applyLanguage && window.applyLanguage(value);
-          }
           if (group === 'city') {
             if (window.applyCity) window.applyCity(value);
             closeModal('city-modal');
@@ -257,22 +171,19 @@
       window.INLINE_I18N = {
         en: {
           nav: { main: "Main Page", cafes: "Cafes and Restaurants", about: "About Us", partners: "For Partners" },
-          form: { phone: "Phone number", phone_placeholder: "+7XXXXXXXXXX", amount: "Amount", amount_placeholder: "0.00", deposit: "Deposit" },
-          footer: { privacy: "Privacy Policy", offer: "Public Offer", address: "Republic of Kazakhstan, Almaty, Kasteev street 91, +77788002044" },
+          footer: { privacy: "Privacy Policy", offer: "Terms of Use", address: "Republic of Kazakhstan, Almaty, Kasteev street 91, +77788002044" },
           modal: { language_title: "Choose language", city_title: "Choose city" },
           cities: { almaty: "Almaty", astana: "Astana" }
         },
         ru: {
           nav: { main: "Главная", cafes: "Кафе и рестораны", about: "О нас", partners: "Партнёрам" },
-          form: { phone: "Номер телефона", phone_placeholder: "+7XXXXXXXXXX", amount: "Сумма", amount_placeholder: "0.00", deposit: "Пополнить" },
-          footer: { privacy: "Политика конфиденциальности", offer: "Публичная оферта", address: "Республика Казахстан, город Алматы, улица Кастеева 90, +77788002044" },
+          footer: { privacy: "Политика конфиденциальности", offer: "Пользовательское соглашение", address: "Республика Казахстан, город Алматы, улица Кастеева 90, +77788002044" },
           modal: { language_title: "Выберите язык", city_title: "Выберите город" },
           cities: { almaty: "Алматы", astana: "Астана" }
         },
         kk: {
           nav: { main: "Басты", cafes: "Кафелер мен мейрамханалар", about: "Біз туралы", partners: "Серіктестерге" },
-          form: { phone: "Телефон нөмірі", phone_placeholder: "+7XXXXXXXXXX", amount: "Сома", amount_placeholder: "0.00", deposit: "Толықтыру" },
-          footer: { privacy: "Құпиялылық саясаты", offer: "Қоғамдық оферта", address: "Қазақстан Республикасы, Алматы қаласы, Қастеев көшесі 91, +77788002044" },
+          footer: { privacy: "Құпиялылық саясаты", offer: "Пайдаланушылық келісім", address: "Қазақстан Республикасы, Алматы қаласы, Қастеев көшесі 91, +77788002044" },
           modal: { language_title: "Тілді таңдаңыз", city_title: "Қаланы таңдаңыз" },
           cities: { almaty: "Алматы", astana: "Астана" }
         }
@@ -336,12 +247,10 @@
           try { localStorage.setItem('lang', lang); } catch (e) {}
           loadLang(lang).then(function (map) {
             applyTranslations(map);
-            // sync header button label
-            var btn = document.getElementById('open-language');
-            if (btn) {
-              var label = lang === 'kk' ? 'Қазақша' : (lang === 'ru' ? 'Русский' : 'English');
-              btn.textContent = label + ' ▾';
-            }
+            // sync toggle active state
+            document.querySelectorAll('#lang-toggle .lang-option').forEach(function (b) {
+              b.classList.toggle('active', b.getAttribute('data-lang') === lang);
+            });
           }).catch(function () {
             // fallback to English
             if (lang !== 'en') loadLang('en').then(function (m) {
@@ -377,9 +286,6 @@
           'assets/mascot.png',
           'assets/mascot2.png',
           'assets/mascot3.png',
-          'assets/mascot4.png',
-          'assets/mascot5.png',
-          'assets/mascot6.png',
           'assets/mascot7.png',
           'assets/mascot8.png'
         ];

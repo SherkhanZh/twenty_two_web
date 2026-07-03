@@ -5,16 +5,9 @@
     "about": "About Us",
     "partners": "For Partners"
   },
-  "form": {
-    "phone": "Phone number",
-    "phone_placeholder": "+7XXXXXXXXXX",
-    "amount": "Amount",
-    "amount_placeholder": "0.00",
-    "deposit": "Deposit"
-  },
   "footer": {
     "privacy": "Privacy Policy",
-    "offer": "Public Offer",
+    "offer": "Terms of Use",
     "address": "Republic ofKazakhstan, Almaty, Kasteev street 91, +77788002044"
   },
   "modal": {
@@ -26,4 +19,3 @@
     "astana": "Astana"
   }
 }
-

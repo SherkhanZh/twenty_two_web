@@ -84,6 +84,29 @@ body {
   cursor: pointer;
 }
 
+.lang-toggle {
+  display: inline-flex;
+  height: 36px;
+  border-radius: 18px;
+  border: 1px solid rgba(0,0,0,0.15);
+  background: #ffffff;
+  overflow: hidden;
+}
+
+.lang-option {
+  border: none;
+  background: transparent;
+  padding: 0 14px;
+  cursor: pointer;
+  font: inherit;
+  color: inherit;
+}
+
+.lang-option.active {
+  background: #ec5d12;
+  color: #ffffff;
+}
+
 .select-group select {
   appearance: none;
   -webkit-appearance: none;
@@ -113,52 +136,10 @@ body {
 }
 .mascot {
   display: block;
-  margin: 0 auto 16px auto;
-  max-width: 200px;
-  width: 50%;
+  margin: 0 auto;
+  max-width: 420px;
+  width: 80%;
   height: auto;
-}
-
-
-.deposit-form {
-  width: 100%;
-  display: grid;
-  grid-template-columns: minmax(220px, 320px) 200px 140px;
-  gap: 12px;
-  align-items: end;
-  justify-content: center;
-}
-
-.form-field {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.form-field label {
-  font-size: 14px;
-}
-
-.form-field input {
-  height: 44px;
-  border-radius: 8px;
-  border: 1px solid rgba(0, 0, 0, 0.15);
-  padding: 0 12px;
-  background: #ffffff;
-}
-
-.btn {
-  height: 44px;
-  border: none;
-  border-radius: 12px;
-  padding: 0 16px;
-  font-weight: 600;
-  cursor: pointer;
-}
-
-.btn-deposit {
-  background: #ec5d12;
-  color: #ffffff;
 }
 
 .site-footer {
@@ -280,9 +261,6 @@ body {
 }
 
 @media (max-width: 720px) {
-  .deposit-form {
-    grid-template-columns: 1fr;
-  }
   .footer-content {
     grid-template-columns: 1fr;
     text-align: center;
